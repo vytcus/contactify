@@ -1,10 +1,8 @@
 {
   "name": "contactify",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open"
   },
   "repository": {
@@ -12,12 +10,8 @@
     "url": "git+https://github.com/vytcus/contactify.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vytautas Gerulis",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vytcus/contactify/issues"
-  },
-  "homepage": "https://github.com/vytcus/contactify#readme",
   "devDependencies": {
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.9",
@@ -29,6 +23,8 @@
     "webpack-dev-server": "3.11.2"
   },
   "dependencies": {
+    "@material-ui/core": "4.12.1",
+    "axios": "0.21.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   }

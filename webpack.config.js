@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: 'development',
   entry: './src/index.tsx',
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json', '.scss']
+  },
   module: {
     rules: [{
       test: /\.tsx?$/,
