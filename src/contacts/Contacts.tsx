@@ -1,10 +1,14 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
+import ContactsTable from './components/ContactsTable';
+import ContactsTableFilters from './components/ContactsTableFilters';
+import ContactsProvider from './providers/ContactsProvider';
 
 function Contacts() {
   return (
-    <Typography>Contactify</Typography>
-  )
+    <ContactsProvider>
+      <ContactsTableFilters />
+      <ContactsTable />
+    </ContactsProvider>
+  );
 }
 
-export default Contacts
+export default Contacts;
