@@ -6,7 +6,7 @@ import { Contact, ContactsContext as ContactsContextType } from '../model';
 
 const initialContext: ContactsContextType = { contacts: [], loading: false };
 
-const ContactsContext = createContext<ContactsContextType>(initialContext);
+export const ContactsContext = createContext<ContactsContextType>(initialContext);
 
 interface Props {
   children: ReactNode;
