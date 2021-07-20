@@ -1,6 +1,7 @@
 import { Box, Avatar, Typography, makeStyles } from '@material-ui/core';
 import { blueGrey, grey } from '@material-ui/core/colors';
-import { useEffect } from 'react';
+import useContactCard from '../hooks/useContactCard';
+import ContactCardSkeleton from './ContactCardSkeleton';
 
 const useStyles = makeStyles(({ spacing }) => ({
   avatar: {
@@ -22,15 +23,16 @@ const useStyles = makeStyles(({ spacing }) => ({
 }));
 
 interface Props {
-  contactId: number;
+  contactId: string;
 }
 
 function ContactCard({ contactId }: Props) {
   const { avatar, lineTitle, lineText } = useStyles();
+  const { contact, loading } = useContactCard(contactId);
 
-  useEffect(() => {
-    console.log('id changed', contactId);
-  }, [contactId]);
+  if (loading || !contact) {
+    return <ContactCardSkeleton />;
+  }
 
   return (
     <Box display="flex" flexDirection="column">
@@ -40,19 +42,19 @@ function ContactCard({ contactId }: Props) {
         <Box>
           <Box display="flex" p={1}>
             <Typography className={lineTitle}>Name:</Typography>
-            <Typography className={lineText}>SelectedName</Typography>
+            <Typography className={lineText}>{contact.name}</Typography>
           </Box>
           <Box display="flex" p={1}>
             <Typography className={lineTitle}>City:</Typography>
-            <Typography className={lineText}>SelectedCity</Typography>
+            <Typography className={lineText}>{contact.city}</Typography>
           </Box>
           <Box display="flex" p={1}>
             <Typography className={lineTitle}>Email:</Typography>
-            <Typography className={lineText}>SelectedEmail</Typography>
+            <Typography className={lineText}>{contact.email}</Typography>
           </Box>
           <Box display="flex" p={1}>
             <Typography className={lineTitle}>Phone:</Typography>
-            <Typography className={lineText}>SelectedPhone</Typography>
+            <Typography className={lineText}>{contact.phone}</Typography>
           </Box>
         </Box>
       </Box>

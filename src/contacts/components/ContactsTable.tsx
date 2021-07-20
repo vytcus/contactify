@@ -13,7 +13,7 @@ interface Props {
 
 function ContactsTable({ contacts, loading }: Props) {
   const {} = useStyles();
-  const [selectedId] = useState<number | null>(1);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
     <Box display="flex">
@@ -36,7 +36,7 @@ function ContactsTable({ contacts, loading }: Props) {
           </TableHead>
           <TableBody>
             {contacts.map((x) => (
-              <TableRow key={x.id}>
+              <TableRow key={x.id} onClick={() => setSelectedId(x.id)} selected={x.id === selectedId}>
                 <TableCell>
                   <Typography>{x.name}</Typography>
                 </TableCell>
