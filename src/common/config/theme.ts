@@ -22,6 +22,7 @@ export const theme = createTheme({
           zIndex: 0,
         },
         '&$checked .MuiIconButton-label:after': {
+          content: '""',
           left: 4,
           top: 4,
           height: 15,
