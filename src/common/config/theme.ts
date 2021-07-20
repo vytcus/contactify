@@ -1,5 +1,5 @@
 import { createTheme } from '@material-ui/core';
-import teal from '@material-ui/core/colors/teal';
+import { teal, blueGrey } from '@material-ui/core/colors';
 
 export const theme = createTheme({
   typography: {
@@ -57,6 +57,16 @@ export const theme = createTheme({
     MuiTableHead: {
       root: {
         backgroundColor: teal[300],
+      },
+    },
+    MuiTableRow: {
+      root: {
+        '&.Mui-selected': {
+          backgroundColor: blueGrey[100],
+        },
+        '&.Mui-selected:hover': {
+          backgroundColor: blueGrey[100],
+        },
       },
     },
   },

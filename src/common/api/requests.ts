@@ -7,7 +7,7 @@ export const getContacts = (): AxiosRequestConfig => ({
   url: `${apiUrl}/contacts`,
 });
 
-export const getContact = (id: number): AxiosRequestConfig => ({
+export const getContact = (id: string): AxiosRequestConfig => ({
   method: 'GET',
   url: `${apiUrl}/contacts/${id}`,
 });
