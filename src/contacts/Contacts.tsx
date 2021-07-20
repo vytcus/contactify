@@ -1,19 +1,27 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
 import ContactsTable from './components/ContactsTable';
 import ContactsTableFilters from './components/ContactsTableFilters';
 import ContactsProvider from './providers/ContactsProvider';
 
-const useStyles = makeStyles(() => ({}));
+const useStyles = makeStyles(() => ({
+  paper: {
+    maxWidth: 1200,
+    margin: 'auto',
+    flex: 1,
+    overflow: 'hidden',
+    borderRadius: '10px 0px 10px 10px',
+  },
+}));
 
 function Contacts() {
-  const {} = useStyles();
+  const { paper } = useStyles();
 
   return (
     <ContactsProvider>
-      <Box maxWidth={1200} margin="auto" flex={1}>
+      <Paper className={paper} elevation={0}>
         <ContactsTableFilters />
         <ContactsTable />
-      </Box>
+      </Paper>
     </ContactsProvider>
   );
 }

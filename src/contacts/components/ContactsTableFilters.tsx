@@ -11,8 +11,8 @@ function ContactsTableFilters() {
   const { formControl } = useStyles();
 
   return (
-    <Box display="flex">
-      <Box display="flex" flex={1} bgcolor={blue[800]} borderRadius="4px 4px 0px 0px">
+    <Box display="flex" bgcolor={blue[700]}>
+      <Box display="flex" flex={1} bgcolor={blue[800]} borderRadius="10px 10px 0px 0px">
         <TextField label="Name" className={formControl} />
         <FormControl className={formControl}>
           <InputLabel id="contacts-table-city-filter-label">City</InputLabel>
@@ -22,9 +22,9 @@ function ContactsTableFilters() {
           <FormControlLabel control={<Checkbox color="primary" />} label="Show active" />
         </FormControl>
       </Box>
-      <Box py={4} px={8}>
+      <Box py={2} px={4}>
         <Typography color="textSecondary" variant="h3" component="h1">
-          Contactify
+          CONTACTIFY
         </Typography>
       </Box>
     </Box>

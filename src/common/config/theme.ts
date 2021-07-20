@@ -22,7 +22,6 @@ export const theme = createTheme({
           zIndex: 0,
         },
         '&$checked .MuiIconButton-label:after': {
-          content: '""',
           left: 4,
           top: 4,
           height: 15,
@@ -53,13 +52,6 @@ export const theme = createTheme({
     MuiSelect: {
       icon: {
         color: 'white',
-      },
-    },
-    MuiTableContainer: {
-      root: {
-        '&.MuiPaper-rounded': {
-          borderRadius: '0px 0px 4px 4px',
-        },
       },
     },
     MuiTableHead: {
