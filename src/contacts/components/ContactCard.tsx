@@ -1,6 +1,7 @@
 import { Box, Avatar, Typography, makeStyles } from '@material-ui/core';
 import { blueGrey, grey } from '@material-ui/core/colors';
 import useContactCard from '../hooks/useContactCard';
+import ContactCardLine from './ContactCardLine';
 import ContactCardSkeleton from './ContactCardSkeleton';
 
 const useStyles = makeStyles(({ spacing }) => ({
@@ -40,22 +41,15 @@ function ContactCard({ contactId }: Props) {
       <Box py={3} px={6} bgcolor={blueGrey[100]} flex={1}>
         <Avatar src="/public/images/userpic.jpg" className={avatar} />
         <Box>
-          <Box display="flex" p={1}>
-            <Typography className={lineTitle}>Name:</Typography>
-            <Typography className={lineText}>{contact.name}</Typography>
-          </Box>
-          <Box display="flex" p={1}>
-            <Typography className={lineTitle}>City:</Typography>
-            <Typography className={lineText}>{contact.city}</Typography>
-          </Box>
+          <ContactCardLine title="Name" text={contact.name} />
+          <ContactCardLine title="City" text={contact.city} />
           <Box display="flex" p={1}>
             <Typography className={lineTitle}>Email:</Typography>
-            <Typography className={lineText}>{contact.email}</Typography>
+            <a className={lineText} href={`mailto:${contact.email}`}>
+              <Typography>{contact.email}</Typography>
+            </a>
           </Box>
-          <Box display="flex" p={1}>
-            <Typography className={lineTitle}>Phone:</Typography>
-            <Typography className={lineText}>{contact.phone}</Typography>
-          </Box>
+          <ContactCardLine title="Phone" text={contact.phone} />
         </Box>
       </Box>
     </Box>
