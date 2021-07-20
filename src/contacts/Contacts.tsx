@@ -1,7 +1,7 @@
 import { makeStyles, Paper } from '@material-ui/core';
 import ContactsTable from './components/ContactsTable';
 import ContactsTableFilters from './components/ContactsTableFilters';
-import ContactsProvider from './providers/ContactsProvider';
+import useContacts from './hooks/useContacts';
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -15,14 +15,13 @@ const useStyles = makeStyles(() => ({
 
 function Contacts() {
   const { paper } = useStyles();
+  const { contacts, loading } = useContacts();
 
   return (
-    <ContactsProvider>
-      <Paper className={paper} elevation={0}>
-        <ContactsTableFilters />
-        <ContactsTable />
-      </Paper>
-    </ContactsProvider>
+    <Paper className={paper} elevation={0}>
+      <ContactsTableFilters />
+      <ContactsTable contacts={contacts} loading={loading} />
+    </Paper>
   );
 }
 

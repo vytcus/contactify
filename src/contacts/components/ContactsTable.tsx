@@ -1,14 +1,18 @@
-import { useContext, useState } from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Box, makeStyles, TableContainer } from '@material-ui/core';
-import { ContactsContext } from '../providers/ContactsProvider';
+import { useState } from 'react';
+import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Box, makeStyles, TableContainer, LinearProgress } from '@material-ui/core';
 import HeaderCell from './HeaderCell';
 import ContactCard from './ContactCard';
+import { Contact } from '../model';
 
 const useStyles = makeStyles(() => ({}));
 
-function ContactsTable() {
+interface Props {
+  contacts: Contact[];
+  loading: boolean;
+}
+
+function ContactsTable({ contacts, loading }: Props) {
   const {} = useStyles();
-  const { contacts } = useContext(ContactsContext);
   const [selectedId] = useState<number | null>(1);
 
   return (
@@ -22,8 +26,14 @@ function ContactsTable() {
               <HeaderCell text="Email" />
               <HeaderCell text="Phone" align="right" />
             </TableRow>
+            {loading && (
+              <TableRow>
+                <TableCell padding="none" colSpan={4}>
+                  <LinearProgress />
+                </TableCell>
+              </TableRow>
+            )}
           </TableHead>
-
           <TableBody>
             {contacts.map((x) => (
               <TableRow key={x.id}>
