@@ -8,7 +8,8 @@ export interface Contact {
   isActive: boolean;
 }
 
-export interface ContactsContext {
-  contacts: Contact[];
-  loading: boolean;
+export interface ContactsFilter {
+  name: string;
+  city: string;
+  active: boolean;
 }
