@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, makeStyles, Select, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, makeStyles, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 import { FormEvent } from 'react';
 import useFilter from '../../common/hooks/useFilter';
@@ -22,10 +22,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
+  cities: string[];
   onApplyFilter: (filter: ContactsFilter) => void;
 }
 
-function ContactsTableFilters({ onApplyFilter }: Props) {
+function ContactsTableFilters({ cities, onApplyFilter }: Props) {
   const { formControl, btn } = useStyles();
   const { filter, onFilterChange } = useFilter(initialFilter);
 
@@ -41,7 +42,14 @@ function ContactsTableFilters({ onApplyFilter }: Props) {
           <TextField label="Name" className={formControl} value={filter.name} onChange={(event) => onFilterChange('name', event.target.value)} />
           <FormControl className={formControl}>
             <InputLabel id="contacts-table-city-filter-label">City</InputLabel>
-            <Select labelId="contacts-table-city-filter-label" value={filter.city} onChange={(event) => onFilterChange('city', event.target.value as string)} />
+            <Select labelId="contacts-table-city-filter-label" value={filter.city} onChange={(event) => onFilterChange('city', event.target.value as string)}>
+              <MenuItem value="">None</MenuItem>
+              {cities.map((x) => (
+                <MenuItem key={x} value={x}>
+                  {x}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
           <FormControl className={formControl}>
             <FormControlLabel

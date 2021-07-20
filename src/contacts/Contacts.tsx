@@ -15,11 +15,11 @@ const useStyles = makeStyles(() => ({
 
 function Contacts() {
   const { paper } = useStyles();
-  const { contacts, loading, onApplyFilter } = useContacts();
+  const { contacts, cities, loading, onApplyFilter } = useContacts();
 
   return (
     <Paper className={paper} elevation={0}>
-      <ContactsTableFilters onApplyFilter={onApplyFilter} />
+      <ContactsTableFilters cities={cities} onApplyFilter={onApplyFilter} />
       <ContactsTable contacts={contacts} loading={loading} />
     </Paper>
   );

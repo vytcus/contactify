@@ -29,7 +29,7 @@ function useContacts() {
     }
 
     if (filter.city) {
-      filteredContacts = filteredContacts.filter((x) => x.city.toLowerCase().includes(filter.city.toLowerCase()));
+      filteredContacts = filteredContacts.filter((x) => x.city === filter.city);
     }
 
     if (filter.active) {
@@ -39,10 +39,20 @@ function useContacts() {
     return filteredContacts;
   }
 
+  function getContactCities() {
+    if (!data) {
+      return [];
+    }
+
+    return data.map((x) => x.city);
+  }
+
   const contacts = useMemo(filterContacts, [data, filter]);
+  const cities = useMemo(getContactCities, [data]);
 
   return {
     contacts,
+    cities,
     loading,
     onApplyFilter,
   };
