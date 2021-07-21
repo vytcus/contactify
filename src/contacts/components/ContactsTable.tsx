@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Box, makeStyles, TableContainer, LinearProgress, TableSortLabel } from '@material-ui/core';
+import ListIcon from '@material-ui/icons/List';
+import { blueGrey } from '@material-ui/core/colors';
 import HeaderCell from './HeaderCell';
 import ContactCard from './ContactCard';
 import { Contact, Order } from '../model';
@@ -16,7 +18,17 @@ function getComparatorByOrder(order: Order) {
   throw Error('Wrong order specified.');
 }
 
-const useStyles = makeStyles(() => ({}));
+const useStyles = makeStyles(() => ({
+  listIcon: {
+    color: 'white',
+  },
+  row: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: blueGrey[50],
+    },
+  },
+}));
 
 interface Props {
   contacts: Contact[];
@@ -24,7 +36,7 @@ interface Props {
 }
 
 function ContactsTable({ contacts, loading }: Props) {
-  const {} = useStyles();
+  const { listIcon, row } = useStyles();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { order, orderBy, handleSort } = useSort('asc', 'name');
 
@@ -42,6 +54,11 @@ function ContactsTable({ contacts, loading }: Props) {
               <HeaderCell text="City" />
               <HeaderCell text="Email" />
               <HeaderCell text="Phone" align="right" />
+              <TableCell align="right">
+                <Box display="flex" alignItems="center" justifyContent="flex-end">
+                  <ListIcon className={listIcon} />
+                </Box>
+              </TableCell>
             </TableRow>
             {loading && (
               <TableRow>
@@ -53,7 +70,7 @@ function ContactsTable({ contacts, loading }: Props) {
           </TableHead>
           <TableBody>
             {contacts.sort(getComparatorByOrder(order)).map((x) => (
-              <TableRow key={x.id} onClick={() => setSelectedId(x.id)} selected={x.id === selectedId}>
+              <TableRow key={x.id} className={row} onClick={() => setSelectedId(x.id)} selected={x.id === selectedId}>
                 <TableCell>
                   <Typography>{x.name}</Typography>
                 </TableCell>
@@ -69,6 +86,7 @@ function ContactsTable({ contacts, loading }: Props) {
                 <TableCell align="right">
                   <Typography>{x.phone}</Typography>
                 </TableCell>
+                <TableCell />
               </TableRow>
             ))}
           </TableBody>
