@@ -1,6 +1,7 @@
+import { FormEvent } from 'react';
 import { Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, makeStyles, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
-import { FormEvent } from 'react';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import useFilter from '../../common/hooks/useFilter';
 import { ContactsFilter } from '../model';
 
@@ -28,6 +29,10 @@ const useStyles = makeStyles(({ spacing }) => ({
   checkbox: {
     marginTop: spacing(2),
   },
+  icon: {
+    color: 'white',
+    marginLeft: spacing(0.5),
+  },
 }));
 
 interface Props {
@@ -36,7 +41,7 @@ interface Props {
 }
 
 function ContactsTableFilters({ cities, onApplyFilter }: Props) {
-  const { form, formControl, btn, checkbox } = useStyles();
+  const { form, formControl, btn, checkbox, icon } = useStyles();
   const { filter, handleFilterChange } = useFilter(initialFilter);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -64,7 +69,12 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
             <FormControlLabel
               control={<Checkbox color="primary" value={filter.active} onChange={(event) => handleFilterChange('active', event.target.checked)} />}
               className={checkbox}
-              label="Show active"
+              label={
+                <Box display="flex" alignItems="center">
+                  <Typography>Show active</Typography>
+                  <VisibilityIcon className={icon} fontSize="small" />
+                </Box>
+              }
             />
           </FormControl>
           <Button type="submit" variant="contained" color="primary" className={btn}>
