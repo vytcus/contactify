@@ -24,6 +24,12 @@ const useStyles = makeStyles(() => ({
       backgroundColor: blueGrey[50],
     },
   },
+  smallCell: {
+    width: '20%',
+  },
+  largeCell: {
+    width: '30%',
+  },
 }));
 
 interface Props {
@@ -32,7 +38,7 @@ interface Props {
 }
 
 function ContactsTable({ contacts, loading }: Props) {
-  const { row } = useStyles();
+  const { row, smallCell, largeCell } = useStyles();
   const { selectedId, shownColumns, order, orderBy, handleSort, handleRowSelect, handleCheckColumn } = useContactsTable();
 
   return (
@@ -42,14 +48,14 @@ function ContactsTable({ contacts, loading }: Props) {
           <TableHead>
             <TableRow>
               {shownColumns.includes('name') && (
-                <TableCell sortDirection={orderBy === 'name' ? order : 'asc'}>
+                <TableCell sortDirection={orderBy === 'name' ? order : 'asc'} className={smallCell}>
                   <TableSortLabel active={orderBy === 'name'} direction={orderBy === 'name' ? order : 'asc'} onClick={() => handleSort('name')}>
                     <Typography color="textSecondary">Name</Typography>
                   </TableSortLabel>
                 </TableCell>
               )}
-              {shownColumns.includes('city') && <HeaderCell text="City" />}
-              {shownColumns.includes('email') && <HeaderCell text="Email" />}
+              {shownColumns.includes('city') && <HeaderCell text="City" className={largeCell} />}
+              {shownColumns.includes('email') && <HeaderCell text="Email" className={smallCell} />}
               {shownColumns.includes('phone') && <HeaderCell text="Phone" align="right" />}
 
               <ShowHideColumnCell shownColumns={shownColumns} onCheck={handleCheckColumn} />

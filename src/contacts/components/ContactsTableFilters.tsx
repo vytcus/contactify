@@ -17,7 +17,7 @@ const useStyles = makeStyles(({ spacing }) => ({
     alignItems: 'center',
   },
   formControl: {
-    minWidth: 120,
+    width: 170,
     margin: spacing(1),
   },
   btn: {
@@ -56,7 +56,7 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
 
   return (
     <Box display="flex" bgcolor={blue[700]}>
-      <Box display="flex" flex={1} alignItems="center" bgcolor={blue[800]} borderRadius="10px 10px 0px 0px" px={2}>
+      <Box display="flex" flex={1} alignItems="center" bgcolor={blue[800]} borderRadius="10px 10px 0px 0px" px={1}>
         <form className={form} onSubmit={onSubmit}>
           <TextField label="Name" className={formControl} value={filter.name} onChange={(event) => handleFilterChange('name', event.target.value)} />
           <FormControl className={formControl}>

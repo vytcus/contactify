@@ -1,7 +1,7 @@
 import { Box, Checkbox, ClickAwayListener, FormControlLabel, makeStyles, MenuItem, MenuList, Paper, Popper, TableCell } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
 import usePopper from '../../common/hooks/usePopper';
-import { Contact } from '../model';
+import { ColumnShowHideOption, Contact } from '../model';
 
 const useStyles = makeStyles(({ spacing, palette }) => ({
   listIcon: {
@@ -21,7 +21,12 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
   },
 }));
 
-const options: (keyof Contact)[] = ['name', 'city', 'email', 'phone'];
+const options: ColumnShowHideOption[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'city', label: 'City' },
+  { key: 'email', label: 'Email' },
+  { key: 'phone', label: 'Phone' },
+];
 
 interface Props {
   shownColumns: (keyof Contact)[];
@@ -41,10 +46,10 @@ function ShowHideColumnCell({ shownColumns, onCheck }: Props) {
             <ClickAwayListener onClickAway={handleClose}>
               <MenuList>
                 {options.map((x) => (
-                  <MenuItem key={x} className={menuItem}>
+                  <MenuItem key={x.key} className={menuItem}>
                     <FormControlLabel
-                      control={<Checkbox color="primary" checked={shownColumns.includes(x)} className={checkbox} onChange={(event) => onCheck(x, event.target.checked)} />}
-                      label={x}
+                      control={<Checkbox color="primary" checked={shownColumns.includes(x.key)} className={checkbox} onChange={(event) => onCheck(x.key, event.target.checked)} />}
+                      label={x.label}
                       className={formControlLabel}
                     />
                   </MenuItem>

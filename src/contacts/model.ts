@@ -15,3 +15,8 @@ export interface ContactsFilter {
 }
 
 export type Order = 'asc' | 'desc';
+
+export interface ColumnShowHideOption {
+  key: keyof Contact;
+  label: string;
+}
