@@ -68,7 +68,7 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
           </FormControl>
           <FormControl className={formControl}>
             <FormControlLabel
-              control={<Checkbox color="primary" value={filter.active} onChange={(event) => handleFilterChange('active', event.target.checked)} />}
+              control={<Checkbox color="primary" checked={filter.active} onChange={(event) => handleFilterChange('active', event.target.checked)} />}
               className={checkbox}
               label={
                 <Box display="flex" alignItems="center">

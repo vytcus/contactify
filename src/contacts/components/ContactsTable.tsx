@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   Table,
   TableHead,
@@ -26,6 +26,7 @@ import { Contact, Order } from '../model';
 import ContactActiveIcon from './ContactActiveIcon';
 import useSort from '../../common/hooks/useSort';
 import { Checkbox } from '@material-ui/core';
+import usePopper from '../../common/hooks/usePopper';
 
 function getComparatorByOrder(order: Order) {
   if (order === 'asc') {
@@ -51,9 +52,13 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
   menuItem: {
     padding: 0,
     paddingLeft: spacing(1),
+    paddingRight: spacing(1),
   },
   checkbox: {
     color: palette.primary.main,
+  },
+  formControlLabel: {
+    margin: 0,
   },
 }));
 
@@ -63,18 +68,27 @@ interface Props {
 }
 
 function ContactsTable({ contacts, loading }: Props) {
-  const { listIcon, row, menuItem, checkbox } = useStyles();
+  const { listIcon, row, menuItem, checkbox, formControlLabel } = useStyles();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { order, orderBy, handleSort } = useSort('asc', 'name');
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
+  const { anchorRef, open, handleOpen, handleClose } = usePopper();
+  const [shownColumns, setShownColumns] = useState<(keyof Contact)[]>(['name', 'city', 'email', 'phone']);
 
-  function handleOpen() {
-    setOpen(true);
+  function handleCheckColumn(prop: keyof Contact, checked: boolean) {
+    if (checked) {
+      setShownColumns((prev) => [...prev, prop]);
+    } else {
+      const newShownColumns = shownColumns.filter((x) => x !== prop);
+      setShownColumns(newShownColumns);
+    }
   }
 
-  function handleClose() {
-    setOpen(false);
+  function handleRowSelect(id: string) {
+    if (selectedId === id) {
+      setSelectedId(null);
+    } else {
+      setSelectedId(id);
+    }
   }
 
   return (
@@ -83,14 +97,17 @@ function ContactsTable({ contacts, loading }: Props) {
         <Table size="medium">
           <TableHead>
             <TableRow>
-              <TableCell sortDirection={orderBy === 'name' ? order : 'asc'}>
-                <TableSortLabel active={orderBy === 'name'} direction={orderBy === 'name' ? order : 'asc'} onClick={() => handleSort('name')}>
-                  <Typography color="textSecondary">Name</Typography>
-                </TableSortLabel>
-              </TableCell>
-              <HeaderCell text="City" />
-              <HeaderCell text="Email" />
-              <HeaderCell text="Phone" align="right" />
+              {shownColumns.includes('name') && (
+                <TableCell sortDirection={orderBy === 'name' ? order : 'asc'}>
+                  <TableSortLabel active={orderBy === 'name'} direction={orderBy === 'name' ? order : 'asc'} onClick={() => handleSort('name')}>
+                    <Typography color="textSecondary">Name</Typography>
+                  </TableSortLabel>
+                </TableCell>
+              )}
+              {shownColumns.includes('city') && <HeaderCell text="City" />}
+              {shownColumns.includes('email') && <HeaderCell text="Email" />}
+              {shownColumns.includes('phone') && <HeaderCell text="Phone" align="right" />}
+
               <TableCell align="right" ref={anchorRef}>
                 <Box display="flex" alignItems="center" justifyContent="flex-end" onClick={handleOpen}>
                   <ListIcon className={listIcon} />
@@ -99,16 +116,60 @@ function ContactsTable({ contacts, loading }: Props) {
                       <ClickAwayListener onClickAway={handleClose}>
                         <MenuList>
                           <MenuItem className={menuItem}>
-                            <FormControlLabel control={<Checkbox color="primary" className={checkbox} />} label="Name" />
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  checked={shownColumns.includes('name')}
+                                  className={checkbox}
+                                  onChange={(event) => handleCheckColumn('name', event.target.checked)}
+                                />
+                              }
+                              label="Name"
+                              className={formControlLabel}
+                            />
                           </MenuItem>
                           <MenuItem className={menuItem}>
-                            <FormControlLabel control={<Checkbox color="primary" className={checkbox} />} label="City" />
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  checked={shownColumns.includes('city')}
+                                  className={checkbox}
+                                  onChange={(event) => handleCheckColumn('city', event.target.checked)}
+                                />
+                              }
+                              label="City"
+                              className={formControlLabel}
+                            />
+                          </MenuItem>
+                          <MenuItem className={menuItem} button>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  checked={shownColumns.includes('email')}
+                                  className={checkbox}
+                                  onChange={(event) => handleCheckColumn('email', event.target.checked)}
+                                />
+                              }
+                              label="Email"
+                              className={formControlLabel}
+                            />
                           </MenuItem>
                           <MenuItem className={menuItem}>
-                            <FormControlLabel control={<Checkbox color="primary" className={checkbox} />} label="Email" />
-                          </MenuItem>
-                          <MenuItem className={menuItem}>
-                            <FormControlLabel control={<Checkbox color="primary" className={checkbox} />} label="Phone" />
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  checked={shownColumns.includes('phone')}
+                                  className={checkbox}
+                                  onChange={(event) => handleCheckColumn('phone', event.target.checked)}
+                                />
+                              }
+                              label="Phone"
+                              className={formControlLabel}
+                            />
                           </MenuItem>
                         </MenuList>
                       </ClickAwayListener>
@@ -127,22 +188,34 @@ function ContactsTable({ contacts, loading }: Props) {
           </TableHead>
           <TableBody>
             {contacts.sort(getComparatorByOrder(order)).map((x) => (
-              <TableRow key={x.id} className={row} onClick={() => setSelectedId(x.id)} selected={x.id === selectedId}>
-                <TableCell>
-                  <Typography>{x.name}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Box display="flex" justifyContent="space-between">
-                    <Typography>{x.city}</Typography>
-                    <ContactActiveIcon active={x.isActive} />
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Typography>{x.email}</Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography>{x.phone}</Typography>
-                </TableCell>
+              <TableRow key={x.id} className={row} onClick={() => handleRowSelect(x.id)} selected={x.id === selectedId}>
+                {shownColumns.includes('name') && (
+                  <TableCell>
+                    <Typography>{x.name}</Typography>
+                  </TableCell>
+                )}
+
+                {shownColumns.includes('city') && (
+                  <TableCell>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography>{x.city}</Typography>
+                      <ContactActiveIcon active={x.isActive} />
+                    </Box>
+                  </TableCell>
+                )}
+
+                {shownColumns.includes('email') && (
+                  <TableCell>
+                    <Typography>{x.email}</Typography>
+                  </TableCell>
+                )}
+
+                {shownColumns.includes('phone') && (
+                  <TableCell align="right">
+                    <Typography>{x.phone}</Typography>
+                  </TableCell>
+                )}
+
                 <TableCell />
               </TableRow>
             ))}
