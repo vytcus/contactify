@@ -3,6 +3,7 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Box, make
 import HeaderCell from './HeaderCell';
 import ContactCard from './ContactCard';
 import { Contact } from '../model';
+import ContactActiveIcon from './ContactActiveIcon';
 
 const useStyles = makeStyles(() => ({}));
 
@@ -41,7 +42,10 @@ function ContactsTable({ contacts, loading }: Props) {
                   <Typography>{x.name}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography>{x.city}</Typography>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography>{x.city}</Typography>
+                    <ContactActiveIcon active={x.isActive} />
+                  </Box>
                 </TableCell>
                 <TableCell>
                   <Typography>{x.email}</Typography>
