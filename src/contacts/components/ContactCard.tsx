@@ -37,7 +37,7 @@ function ContactCard({ contactId }: Props) {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box height={56.3} bgcolor="primary.main" />
+      <Box height={57.3} bgcolor="primary.main" />
       <Box py={3} px={6} bgcolor={blueGrey[100]} flex={1}>
         <Avatar src="/public/images/userpic.jpg" className={avatar} />
         <Box>
