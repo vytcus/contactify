@@ -77,8 +77,6 @@ function ContactsTable({ contacts, loading }: Props) {
     setOpen(false);
   }
 
-  console.log('open', open);
-
   return (
     <Box display="flex">
       <TableContainer>
