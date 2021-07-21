@@ -28,6 +28,7 @@ const useStyles = makeStyles(({ spacing }) => ({
   },
   checkbox: {
     marginTop: spacing(2),
+    color: 'white',
   },
   icon: {
     color: 'white',

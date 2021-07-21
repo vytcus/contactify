@@ -33,16 +33,6 @@ export const theme = createTheme({
         },
       },
     },
-    MuiFormLabel: {
-      root: {
-        color: 'white',
-      },
-    },
-    MuiFormControlLabel: {
-      label: {
-        color: 'white',
-      },
-    },
     MuiInput: {
       underline: {
         '&::before': {
