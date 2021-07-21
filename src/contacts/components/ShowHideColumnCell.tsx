@@ -41,7 +41,7 @@ function ShowHideColumnCell({ shownColumns, onCheck }: Props) {
             <ClickAwayListener onClickAway={handleClose}>
               <MenuList>
                 {options.map((x) => (
-                  <MenuItem className={menuItem}>
+                  <MenuItem key={x} className={menuItem}>
                     <FormControlLabel
                       control={<Checkbox color="primary" checked={shownColumns.includes(x)} className={checkbox} onChange={(event) => onCheck(x, event.target.checked)} />}
                       label={x}

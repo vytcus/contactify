@@ -34,6 +34,10 @@ const useStyles = makeStyles(({ spacing }) => ({
     color: 'white',
     marginLeft: spacing(0.5),
   },
+  title: {
+    fontFamily: 'FontAwesome',
+    fontWeight: 600,
+  },
 }));
 
 interface Props {
@@ -42,7 +46,7 @@ interface Props {
 }
 
 function ContactsTableFilters({ cities, onApplyFilter }: Props) {
-  const { form, formControl, btn, checkbox, icon } = useStyles();
+  const { form, formControl, btn, checkbox, icon, title } = useStyles();
   const { filter, handleFilterChange } = useFilter(initialFilter);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -83,8 +87,8 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
           </Button>
         </form>
       </Box>
-      <Box py={2} px={4}>
-        <Typography color="textSecondary" variant="h3" component="h1">
+      <Box py={2} px={7.75}>
+        <Typography color="textSecondary" variant="h4" component="h1" className={title}>
           CONTACTIFY
         </Typography>
       </Box>
