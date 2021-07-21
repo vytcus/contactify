@@ -10,14 +10,23 @@ export const initialFilter: ContactsFilter = {
   active: false,
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ spacing }) => ({
+  form: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   formControl: {
     minWidth: 120,
+    margin: spacing(1),
   },
   btn: {
     width: 100,
     borderRadius: 15,
     color: 'white',
+    marginTop: spacing(2),
+  },
+  checkbox: {
+    marginTop: spacing(2),
   },
 }));
 
@@ -27,7 +36,7 @@ interface Props {
 }
 
 function ContactsTableFilters({ cities, onApplyFilter }: Props) {
-  const { formControl, btn } = useStyles();
+  const { form, formControl, btn, checkbox } = useStyles();
   const { filter, onFilterChange } = useFilter(initialFilter);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -38,7 +47,7 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
   return (
     <Box display="flex" bgcolor={blue[700]}>
       <Box display="flex" flex={1} alignItems="center" bgcolor={blue[800]} borderRadius="10px 10px 0px 0px" px={2}>
-        <form onSubmit={onSubmit}>
+        <form className={form} onSubmit={onSubmit}>
           <TextField label="Name" className={formControl} value={filter.name} onChange={(event) => onFilterChange('name', event.target.value)} />
           <FormControl className={formControl}>
             <InputLabel id="contacts-table-city-filter-label">City</InputLabel>
@@ -54,6 +63,7 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
           <FormControl className={formControl}>
             <FormControlLabel
               control={<Checkbox color="primary" value={filter.active} onChange={(event) => onFilterChange('active', event.target.checked)} />}
+              className={checkbox}
               label="Show active"
             />
           </FormControl>
