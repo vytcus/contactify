@@ -33,6 +33,11 @@ export const theme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      input: {
+        color: 'white',
+      },
+    },
     MuiInput: {
       underline: {
         '&::before': {
