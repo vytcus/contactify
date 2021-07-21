@@ -11,6 +11,10 @@ module.exports = {
       test: /\.tsx?$/,
       loader: 'ts-loader',
       exclude: /node_modules/
+    },
+    {
+      test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+      use: ['file-loader']
     }]
   },
   plugins: [
