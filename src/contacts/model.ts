@@ -13,3 +13,5 @@ export interface ContactsFilter {
   city: string;
   active: boolean;
 }
+
+export type Order = 'asc' | 'desc';

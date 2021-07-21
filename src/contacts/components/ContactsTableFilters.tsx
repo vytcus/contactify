@@ -37,7 +37,7 @@ interface Props {
 
 function ContactsTableFilters({ cities, onApplyFilter }: Props) {
   const { form, formControl, btn, checkbox } = useStyles();
-  const { filter, onFilterChange } = useFilter(initialFilter);
+  const { filter, handleFilterChange } = useFilter(initialFilter);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -48,10 +48,10 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
     <Box display="flex" bgcolor={blue[700]}>
       <Box display="flex" flex={1} alignItems="center" bgcolor={blue[800]} borderRadius="10px 10px 0px 0px" px={2}>
         <form className={form} onSubmit={onSubmit}>
-          <TextField label="Name" className={formControl} value={filter.name} onChange={(event) => onFilterChange('name', event.target.value)} />
+          <TextField label="Name" className={formControl} value={filter.name} onChange={(event) => handleFilterChange('name', event.target.value)} />
           <FormControl className={formControl}>
             <InputLabel id="contacts-table-city-filter-label">City</InputLabel>
-            <Select labelId="contacts-table-city-filter-label" value={filter.city} onChange={(event) => onFilterChange('city', event.target.value as string)}>
+            <Select labelId="contacts-table-city-filter-label" value={filter.city} onChange={(event) => handleFilterChange('city', event.target.value as string)}>
               <MenuItem value="">None</MenuItem>
               {cities.map((x) => (
                 <MenuItem key={x} value={x}>
@@ -62,7 +62,7 @@ function ContactsTableFilters({ cities, onApplyFilter }: Props) {
           </FormControl>
           <FormControl className={formControl}>
             <FormControlLabel
-              control={<Checkbox color="primary" value={filter.active} onChange={(event) => onFilterChange('active', event.target.checked)} />}
+              control={<Checkbox color="primary" value={filter.active} onChange={(event) => handleFilterChange('active', event.target.checked)} />}
               className={checkbox}
               label="Show active"
             />

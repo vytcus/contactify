@@ -1,9 +1,20 @@
 import { useState } from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Box, makeStyles, TableContainer, LinearProgress } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Box, makeStyles, TableContainer, LinearProgress, TableSortLabel } from '@material-ui/core';
 import HeaderCell from './HeaderCell';
 import ContactCard from './ContactCard';
-import { Contact } from '../model';
+import { Contact, Order } from '../model';
 import ContactActiveIcon from './ContactActiveIcon';
+import useSort from '../../common/hooks/useSort';
+
+function getComparatorByOrder(order: Order) {
+  if (order === 'asc') {
+    return (a: Contact, b: Contact) => a.name.localeCompare(b.name);
+  } else if (order === 'desc') {
+    return (a: Contact, b: Contact) => b.name.localeCompare(a.name);
+  }
+
+  throw Error('Wrong order specified.');
+}
 
 const useStyles = makeStyles(() => ({}));
 
@@ -15,6 +26,7 @@ interface Props {
 function ContactsTable({ contacts, loading }: Props) {
   const {} = useStyles();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { order, orderBy, handleSort } = useSort('asc', 'name');
 
   return (
     <Box display="flex">
@@ -22,7 +34,11 @@ function ContactsTable({ contacts, loading }: Props) {
         <Table size="medium">
           <TableHead>
             <TableRow>
-              <HeaderCell text="Name" />
+              <TableCell sortDirection={orderBy === 'name' ? order : 'asc'}>
+                <TableSortLabel active={orderBy === 'name'} direction={orderBy === 'name' ? order : 'asc'} onClick={() => handleSort('name')}>
+                  <Typography color="textSecondary">Name</Typography>
+                </TableSortLabel>
+              </TableCell>
               <HeaderCell text="City" />
               <HeaderCell text="Email" />
               <HeaderCell text="Phone" align="right" />
@@ -36,7 +52,7 @@ function ContactsTable({ contacts, loading }: Props) {
             )}
           </TableHead>
           <TableBody>
-            {contacts.map((x) => (
+            {contacts.sort(getComparatorByOrder(order)).map((x) => (
               <TableRow key={x.id} onClick={() => setSelectedId(x.id)} selected={x.id === selectedId}>
                 <TableCell>
                   <Typography>{x.name}</Typography>
