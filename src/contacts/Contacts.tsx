@@ -6,7 +6,6 @@ import useContacts from './hooks/useContacts';
 const useStyles = makeStyles(() => ({
   paper: {
     maxWidth: 1200,
-    margin: 'auto',
     flex: 1,
     overflow: 'hidden',
     borderRadius: '10px 0px 10px 10px',
